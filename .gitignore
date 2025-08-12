@@ -1,0 +1,40 @@
+# Dependencies
+backend/vendor/
+websocket-server/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Symfony
+backend/var/
+backend/.env.local
+backend/.env.test.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+composer.phar
+backend/php.ini
+*.tmp
+*.temp
+
+# Database
+*.sqlite
+*.db
+
+# Cache
+backend/var/cache/
+backend/var/logs/

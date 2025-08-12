@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StockMaster Pro{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        },
+                        success: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a'
+                        },
+                        warning: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706'
+                        },
+                        danger: {
+                            50: '#fef2f2',
+                            500: '#ef4444',
+                            600: '#dc2626'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.3s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+    
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="bg-gray-50 text-gray-900">
+    {% if app.user %}
+        <!-- Layout avec sidebar -->
+        <div class="flex h-screen bg-gray-50">
+            <!-- Sidebar -->
+            <div class="hidden md:flex md:flex-shrink-0">
+                <div class="flex flex-col w-64">
+                    <div class="flex flex-col h-0 flex-1 bg-white border-r border-gray-200">
+                        <!-- Logo -->
+                        <div class="flex items-center h-16 flex-shrink-0 px-4 bg-primary-600">
+                            <i class="fas fa-boxes text-white text-2xl mr-3"></i>
+                            <span class="text-white font-semibold text-lg">StockMaster Pro</span>
+                        </div>
+                        
+                        <!-- Navigation -->
+                        <div class="flex-1 flex flex-col overflow-y-auto custom-scrollbar">
+                            <nav class="flex-1 px-2 py-4 space-y-1">
+                                <a href="{{ path('app_dashboard') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_dashboard' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-tachometer-alt mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Tableau de bord
+                                </a>
+                                
+                                <a href="{{ path('app_products') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_products' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-box mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Produits
+                                </a>
+                                
+                                <a href="{{ path('app_categories') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_categories' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-tags mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Catégories
+                                </a>
+                                
+                                <a href="{{ path('app_suppliers') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_suppliers' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-truck mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Fournisseurs
+                                </a>
+                                
+                                <a href="{{ path('app_stock_movements') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_stock_movements' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-exchange-alt mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Mouvements de stock
+                                </a>
+                                
+                                <a href="{{ path('app_customers') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_customers' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-users mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Clients
+                                </a>
+                                
+                                <a href="{{ path('app_orders') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_orders' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-shopping-cart mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Commandes
+                                </a>
+                                
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_users') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {% if app.request.get('_route') == 'app_users' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                    <i class="fas fa-user-cog mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                    Utilisateurs
+                                </a>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenu principal -->
+            <div class="flex flex-col w-0 flex-1 overflow-hidden">
+                <!-- Top bar -->
+                <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+                    <button type="button" class="md:hidden px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500" id="mobile-menu-button">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <div class="flex-1 px-4 flex justify-between">
+                        <div class="flex-1 flex">
+                            <h1 class="text-2xl font-semibold text-gray-900 my-auto">{% block page_title %}{% endblock %}</h1>
+                        </div>
+                        
+                        <div class="ml-4 flex items-center md:ml-6">
+                            <!-- Notifications -->
+                            <button type="button" class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            
+                            <!-- Profile dropdown -->
+                            <div class="ml-3 relative">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center">
+                                            <span class="text-white font-medium text-sm">{{ app.user.firstName|first }}{{ app.user.lastName|first }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-medium text-gray-700">{{ app.user.firstName }} {{ app.user.lastName }}</p>
+                                        <p class="text-xs text-gray-500">{{ app.user.email }}</p>
+                                    </div>
+                                    <a href="{{ path('app_logout') }}" class="ml-4 text-gray-400 hover:text-gray-500">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenu de la page -->
+                <main class="flex-1 relative overflow-y-auto focus:outline-none">
+                    <div class="py-6">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            {% for message in app.flashes('success') %}
+                                <div class="mb-4 bg-success-50 border border-success-200 text-success-800 px-4 py-3 rounded-md">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            
+                            {% for message in app.flashes('error') %}
+                                <div class="mb-4 bg-danger-50 border border-danger-200 text-danger-800 px-4 py-3 rounded-md">
+                                    <i class="fas fa-exclamation-circle mr-2"></i>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            
+                            {% block body %}{% endblock %}
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden" id="mobile-menu" style="display: none;">
+            <div class="fixed inset-0 z-40 flex">
+                <div class="fixed inset-0 bg-gray-600 bg-opacity-75" id="mobile-menu-overlay"></div>
+                <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+                    <div class="absolute top-0 right-0 -mr-12 pt-2">
+                        <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" id="mobile-menu-close">
+                            <i class="fas fa-times text-white"></i>
+                        </button>
+                    </div>
+                    <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                        <div class="flex-shrink-0 flex items-center px-4">
+                            <i class="fas fa-boxes text-primary-600 text-2xl mr-3"></i>
+                            <span class="text-primary-600 font-semibold text-lg">StockMaster Pro</span>
+                        </div>
+                        <nav class="mt-5 px-2 space-y-1">
+                            <a href="{{ path('app_dashboard') }}" class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if app.request.get('_route') == 'app_dashboard' %}bg-primary-100 text-primary-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                                <i class="fas fa-tachometer-alt mr-4 text-gray-400 group-hover:text-gray-500"></i>
+                                Tableau de bord
+                            </a>
+                            <!-- Autres liens de navigation mobile... -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Layout sans sidebar pour les pages de connexion -->
+        {% block auth_body %}{% endblock %}
+    {% endif %}
+    
+    <script>
+        // Gestion du menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.style.display = 'block';
+                });
+            }
+            
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', function() {
+                    mobileMenu.style.display = 'none';
+                });
+            }
+            
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', function() {
+                    mobileMenu.style.display = 'none';
+                });
+            }
+        });
+    </script>
+    
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

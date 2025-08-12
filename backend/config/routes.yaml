@@ -1,0 +1,84 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+# Route par défaut
+index:
+    path: /
+    controller: App\Controller\MainController::index
+
+# Routes de sécurité
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+# Routes du tableau de bord
+app_dashboard:
+    path: /dashboard
+    controller: App\Controller\DashboardController::index
+
+# Routes des produits
+app_products:
+    path: /products
+    controller: App\Controller\ProductController::index
+
+app_products_new:
+    path: /products/new
+    controller: App\Controller\ProductController::new
+
+app_products_show:
+    path: /products/{id}
+    controller: App\Controller\ProductController::show
+
+app_products_edit:
+    path: /products/{id}/edit
+    controller: App\Controller\ProductController::edit
+
+app_products_delete:
+    path: /products/{id}/delete
+    controller: App\Controller\ProductController::delete
+    methods: [POST]
+
+# Routes des catégories
+app_categories:
+    path: /categories
+    controller: App\Controller\CategoryController::index
+
+# Routes des fournisseurs
+app_suppliers:
+    path: /suppliers
+    controller: App\Controller\SupplierController::index
+
+# Routes des mouvements de stock
+app_stock_movements:
+    path: /stock-movements
+    controller: App\Controller\StockMovementController::index
+
+app_stock_movements_new:
+    path: /stock-movements/new
+    controller: App\Controller\StockMovementController::new
+
+# Routes des clients
+app_customers:
+    path: /customers
+    controller: App\Controller\CustomerController::index
+
+# Routes des commandes
+app_orders:
+    path: /orders
+    controller: App\Controller\OrderController::index
+
+app_orders_new:
+    path: /orders/new
+    controller: App\Controller\OrderController::new
+
+# Routes des utilisateurs (admin)
+app_users:
+    path: /users
+    controller: App\Controller\UserController::index
