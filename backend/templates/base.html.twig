@@ -273,3 +273,116 @@
     {% block javascripts %}{% endblock %}
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMaster Pro - Test</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <div class="flex h-screen bg-gray-50">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:flex-shrink-0">
+            <div class="flex flex-col w-64">
+                <div class="flex flex-col h-0 flex-1 bg-white border-r border-gray-200">
+                    <!-- Logo -->
+                    <div class="flex items-center h-16 flex-shrink-0 px-4 bg-primary-600">
+                        <i class="fas fa-boxes text-white text-2xl mr-3"></i>
+                        <span class="text-white font-semibold text-lg">StockMaster Pro</span>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="flex-1 flex flex-col overflow-y-auto">
+                        <nav class="flex-1 px-2 py-4 space-y-1">
+                            <a href="#" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md bg-primary-100 text-primary-900">
+                                <i class="fas fa-tachometer-alt mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                Tableau de bord
+                            </a>
+                            
+                            <a href="#" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                <i class="fas fa-box mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                Produits
+                            </a>
+                            
+                            <a href="#" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                <i class="fas fa-tags mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                Catégories
+                            </a>
+                            
+                            <a href="#" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                                <i class="fas fa-truck mr-3 text-gray-400 group-hover:text-gray-500"></i>
+                                Fournisseurs
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contenu principal -->
+        <div class="flex flex-col w-0 flex-1 overflow-hidden">
+            <!-- Top bar -->
+            <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+                <div class="flex-1 px-4 flex justify-between">
+                    <div class="flex-1 flex">
+                        <h1 class="text-2xl font-semibold text-gray-900 my-auto">Tableau de bord</h1>
+                    </div>
+                    
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <div class="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center">
+                                    <span class="text-white font-medium text-sm">TU</span>
+                                </div>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-700">Test User</p>
+                                <p class="text-xs text-gray-500">test@example.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenu de la page -->
+            <main class="flex-1 relative overflow-y-auto focus:outline-none">
+                <div class="py-6">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h2 class="text-lg font-medium text-gray-900 mb-4">Bienvenue dans StockMaster Pro !</h2>
+                            <p class="text-gray-600">Votre interface de gestion de stock est maintenant fonctionnelle !</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
